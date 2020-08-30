@@ -9,7 +9,7 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *args, **options):
-        with open('phones.csv', 'rt', encoding='UTF-8') as csv_file:
+        with open('moscow_bus_stations.csv', 'rt', encoding='UTF-8') as csv_file:
             table = []
             table_reader = csv.reader(csv_file, delimiter=';')
             next(table_reader)
