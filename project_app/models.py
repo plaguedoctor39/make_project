@@ -9,4 +9,4 @@ class Station(models.Model):
 
 
 class Route(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
