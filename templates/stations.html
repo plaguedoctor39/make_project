@@ -21,7 +21,7 @@
         {% for item in stations %}
           myMap.geoObjects
             .add(new ymaps.Placemark([{{ item.latitude }}, {{ item.longitude }}], {
-              balloonContent: '{{ item.route_numbers }}',
+              balloonContent: '{{ item.routes }}',
               iconCaption: '{{ item.name }}'
             }, {
               preset: 'islands#blueCircleDotIconWithCaption',

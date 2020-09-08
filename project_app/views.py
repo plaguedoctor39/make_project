@@ -3,17 +3,29 @@ from .models import *
 
 def show_stations(request):
     template = 'stations.html'
-    stations = Station.objects.all()
-    first_dot = Station.objects.first()
-    second_dot = Station.objects.last()
-    center = {'x': (first_dot.latitude + first_dot.longitude) / 2,
-              'y': (second_dot.latitude + second_dot.longitude) / 2}
-    print(stations)
-    routes = Route.objects.all()
-    if request.method == 'GET':
-        print(request)
-    context = {'stations': list(stations),
-               'center': center,
+    routes = Route.objects.all().order_by('name')
+
+    if 'route' in request.GET:
+        route_name = request.GET['route']
+        route = Route.objects.get(name=route_name)
+        stations = Station.objects.filter(routes=route)
+
+        coordinates_x = stations.last().latitude - stations.first().latitude
+        coordinates_y = stations.last().longitude - stations.first().longitude
+
+        center_x = coordinates_x
+        center_y = coordinates_y
+
+        center = {'x': center_x, 'y': center_y}
+        print(len(list(stations)))
+        return render(request, template, {
+            'routes': routes,
+            'stations': stations,
+            'center': center,
+            'route': route_name,
+        })
+
+    context = {
                'routes': routes
                }
     return render(request, template, context)
